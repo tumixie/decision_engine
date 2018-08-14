@@ -5,51 +5,110 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     {#  网页标题块  #}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+{#    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">#}
     <link rel="stylesheet" href="{% static 'icon_font/iconfont.css' %}"/>
-    <link rel="stylesheet" href="{% static 'layui/css/layui.css' %}"/>
-    <script type="text/javascript" src="{% static 'layui/layui.all.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'extends/layui/css/layui.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/menu.css' %}"/>
+    <script type="text/javascript" src="{% static 'extends/layui/layui.all.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/extends/jquery.js' %}"></script>
 </head>
-<body>
-<div class="title_body">
-    <div class="title">
-        <i class="iconfont icon-gongju" style="font-size: 30px"></i>
-        <a href="{% url 'index' %}"><strong>决策引擎管理控台</strong></a>
+<body id="bg">
+<div class="main_container">
+    <div class="leftsidebar_box">
+        <dl class="dp">
+            <dt onClick="changeImage()">大数据平台 <img src="{% static 'images/menu/select_xl01.png' %}"></dt>
+            <dd><a href="{% url 'row_keys' %}">原始数据查询</a></dd>
+        </dl>
+        <dl class="ndes">
+            <dt onClick="changeImage()">NDES管理 <img src="{% static 'images/menu/select_xl01.png' %}"></dt>
+            <dd><a href="{% url 'work_flow' %}">进件流程查询</a></dd>
+        </dl>
+        <dl class="brms">
+            <dt onClick="changeImage()">BRMS管理 <img src="{% static 'images/menu/select_xl01.png' %}"></dt>
+            <dd><a href="{% url 'brms' %}">策略查询</a></dd>
+        </dl>
+        <dl class="report">
+            <dt onClick="changeImage()">信用报告 <img src="{% static 'images/menu/select_xl01.png' %}"></dt>
+            <dd><a href="{% url 'brms' %}">个人简版信用报告</a></dd>
+        </dl>
+    </div>
+    <div class="ds_header">
+        <div class="logo">
+            <i class="iconfont icon-gongju" style="font-size: 30px"></i>
+            <a href="{% url 'index' %}"><strong>决策引擎管理控台</strong></a>
+        </div>
+        <div class="user_login">
+            {% if user.is_authenticated %}
+                <div class="user_name">hello {{ user.get_username }}!</div>
+                <div class="login"><a href="{% url 'logout' %}?next={{ request.path }}">退出</a></div>
+            {% else %}
+                <div><a href="{% url 'login' %}?next={{ request.path }}">登录</a></div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="main_body">
+        {% block body %}
+        {% endblock body %}
     </div>
 </div>
-<div class="menu">
-    {# 侧边栏 目录 #}
-    <ul>
-        <li>
-            <i class="iconfont">&#xe77d;</i>
-            <a href="{% url 'row_keys' %}">原始数据查询</a>
-        </li>
-        <li>
-            <i class="iconfont">&#xe77d;</i>
-            <a href="{% url 'work_flow' %}">进件流程查询</a>
-        </li>
-        <li>
-            <i class="iconfont">&#xe77d;</i>
-            <a href="{% url 'brms' %}">策略查询</a>
-        </li>
-        <li>
-            <i class="iconfont">&#xe77d;</i>
-            <a>个人信用报告查询</a>
-        </li>
-    </ul>
-</div>
-<div class="main_body">
-    <div class="user_login_info">
-        {% if user.is_authenticated %}
-            <div>hello {{ user.get_username }}!</div>
-            <div><a href="{% url 'logout' %}?next={{ request.path }}">Logout</a></div>
-        {% else %}
-            <div><a href="{% url 'login' %}?next={{ request.path }}">Login</a></div>
-        {% endif %}
-    </div>
-    {# 网页主体内容块 #}
-    {% block body %}{% endblock body %}
-</div>
+
+
+{#<div class="title_body">#}
+{#    <div class="title">#}
+{#        <i class="iconfont icon-gongju" style="font-size: 30px"></i>#}
+{#        <a href="{% url 'index' %}"><strong>决策引擎管理控台</strong></a>#}
+{#    </div>#}
+{#</div>#}
+{#<div class="menu">#}
+{# 侧边栏 目录 #}
+{#    <ul>#}
+{#        <li>#}
+{#            <i class="iconfont">&#xe77d;</i>#}
+{#            <a href="{% url 'row_keys' %}">原始数据查询</a>#}
+{#        </li>#}
+{#        <li>#}
+{#            <i class="iconfont">&#xe77d;</i>#}
+{#            <a href="{% url 'work_flow' %}">进件流程查询</a>#}
+{#        </li>#}
+{#        <li>#}
+{#            <i class="iconfont">&#xe77d;</i>#}
+{#            <a href="{% url 'brms' %}">策略查询</a>#}
+{#        </li>#}
+{#        <li>#}
+{#            <i class="iconfont">&#xe77d;</i>#}
+{#            <a>个人信用报告查询</a>#}
+{#        </li>#}
+{#    </ul>#}
+{#</div>#}
+{#<div class="main_body">#}
+{#    <div class="user_login_info">#}
+{#        {% if user.is_authenticated %}#}
+{#            <div>hello {{ user.get_username }}!</div>#}
+{#            <div><a href="{% url 'logout' %}?next={{ request.path }}">Logout</a></div>#}
+{#        {% else %}#}
+{#            <div><a href="{% url 'login' %}?next={{ request.path }}">Login</a></div>#}
+{#        {% endif %}#}
+{#    </div>#}
+{# 网页主体内容块 #}
+{#    {% block body %}{% endblock body %}#}
+{#</div>#}
 </body>
 <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+<script type="text/javascript">
+    $(".leftsidebar_box dt").css({"background-color": "#3992d0"});
+    $(".leftsidebar_box dt img").attr("src", "{% static 'images/menu/select_xl01.png' %}");
+    $(function () {
+        $(".leftsidebar_box dd").hide();
+        $(".leftsidebar_box dt").click(function () {
+            $(".leftsidebar_box dt").css({"background-color": "#3992d0"});
+            $(this).css({"background-color": "#317eb4"});
+            $(this).parent().find('dd').removeClass("menu_chioce");
+            $(".leftsidebar_box dt img").attr("src", "{% static 'images/menu/select_xl01.png' %}");
+            $(this).parent().find('img').attr("src", "{% static 'images/menu/select_xl.png' %}");
+            $(".menu_chioce").slideUp();
+            $(this).parent().find('dd').slideToggle();
+            $(this).parent().find('dd').addClass("menu_chioce");
+        });
+    })
+</script>
 </html>

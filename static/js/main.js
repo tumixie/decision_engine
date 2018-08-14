@@ -2,9 +2,9 @@
  * Created by tumixie on 2018/8/13.
  */
 
-function $(Nid){
- return document.getElementById(Nid);
-}
+// function $(Nid){
+//  return document.getElementById(Nid);
+// }
 
 function openDialogView(title,url,width,height){
 
@@ -29,6 +29,6 @@ function openDialogView(title,url,width,height){
 }
 
 function search(){//查询，页码清零
-	$("lookForCondition").submit();
+	$("#lookForCondition").submit();
 		return false;
 }

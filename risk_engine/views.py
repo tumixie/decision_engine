@@ -160,8 +160,6 @@ def brms_util(request):
         brms_parser.detail_rule_group_parser(rule_group_file, version='1.1.1')
     for ii, rule_file in enumerate(rule_files):
         brms_parser.detail_rule_parser(rule_file, version='1.1.1')
-        # if ii > 0:
-        #     break
     brms_parser.detail_policy_parser(k_module_file, version='1.1.1')
     return HttpResponse(render(request, 'brms_util.html'))
 

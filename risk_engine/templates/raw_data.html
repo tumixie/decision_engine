@@ -2,7 +2,7 @@
 {% load static from staticfiles %}
 {% block body %}
     <div class="search_con">
-        <form action="{% url 'row_keys' %}" method="post">
+        <form action="{% url 'row_keys' %}" method="post" style="padding: 0px; margin: 0px; border: 0px">
             {% csrf_token %}
             <i class="iconfont icon-sousuo icon"></i>
             <input type="text" name="apply_no" placeholder="请输入进件号" value="{{ apply_no }}" class="input_text">
@@ -13,7 +13,7 @@
         <div class="row_keys_empty">未找到数据!</div>
     {% endif %}
     <div class="raw_data_content">
-        <table style="border-collapse: collapse">
+        <table>
             <thead>
                 <tr>
                     <td>apply_no</td>
