@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+{% load static from staticfiles %}
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    {#  网页标题块  #}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'icon_font/iconfont.css' %}"/>
+    <link rel="stylesheet" href="{% static 'layui/css/layui.css' %}"/>
+    <script type="text/javascript" src="{% static 'layui/layui.all.js' %}"></script>
+</head>
+<body>
+<div class="title_body">
+    <div class="title">
+        <i class="iconfont icon-gongju" style="font-size: 30px"></i>
+        <a href="{% url 'index' %}"><strong>决策引擎管理控台</strong></a>
+    </div>
+</div>
+<div class="menu">
+    {# 侧边栏 目录 #}
+    <ul>
+        <li>
+            <i class="iconfont">&#xe77d;</i>
+            <a href="{% url 'row_keys' %}">原始数据查询</a>
+        </li>
+        <li>
+            <i class="iconfont">&#xe77d;</i>
+            <a href="{% url 'work_flow' %}">进件流程查询</a>
+        </li>
+        <li>
+            <i class="iconfont">&#xe77d;</i>
+            <a href="{% url 'brms' %}">策略查询</a>
+        </li>
+        <li>
+            <i class="iconfont">&#xe77d;</i>
+            <a>个人信用报告查询</a>
+        </li>
+    </ul>
+</div>
+<div class="main_body">
+    <div class="user_login_info">
+        {% if user.is_authenticated %}
+            <div>hello {{ user.get_username }}!</div>
+            <div><a href="{% url 'logout' %}?next={{ request.path }}">Logout</a></div>
+        {% else %}
+            <div><a href="{% url 'login' %}?next={{ request.path }}">Login</a></div>
+        {% endif %}
+    </div>
+    {# 网页主体内容块 #}
+    {% block body %}{% endblock body %}
+</div>
+</body>
+<script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+</html>

@@ -1,0 +1,70 @@
+body,ul,ol,p,h1,h2,h3,h4,h5,h6,dl,dd,select,input,textarea,form{margin:0;padding:0}
+a{text-decoration: none; color: inherit}
+
+body{height:800px; display: flex; flex-direction: column; background-color: #8dc5ff}
+.title_body{background-color:  #409EFF; width: 20%; display: flex; height: 8%}
+.title{position: absolute; line-height: 30px; font-size: 25px; left: 10px; top: 13px}
+.menu{background-color:  #8dc5ff; width: 20%; display: flex;}
+.menu li{position: relative; left: 20px; list-style-type: none; line-height: 40px; font-size: 20px}
+.menu a{text-decoration: none; color: #4e4e4e}
+.user_login_info{background-color:  darkgray; display: flex; height: 6%; flex-direction: row; position: relative}
+.user_login_info div{position: relative; left: 5%; top: 30%; white-space: pre}
+.main_body{position: absolute; left: 20%; background-color: #e2e2e2; height: 100%; top: 0; width: 80%}
+
+.search_con{width:616px;height:38px;border:1px solid #37ab40;margin:34px 0 0 124px;background-color: #fff}
+.search_con .input_text{width:460px;height:37px;border:0px;margin:0px 0 0 16px;outline:none;font-size:12px;color:#737272;font-family:'Microsoft Yahei'}
+.search_con .icon{position: relative; left: 10px; font-size: 25px; top: 5px;background-color: #fff}
+.search_con .input_btn{width:104px;height:38px;background-color:#37ab40;border:0px;font-size:14px;color:#fff;font-family:'Microsoft Yahei';outline:none;cursor:pointer;  }
+
+.raw_data_content{position: relative; top: 10%; left: 2%; width: 95%}
+.report_head {position: relative; height: 100px; background-color: #00bc6f; color: blue; font-size: 50px}
+.row_keys_empty{position: relative; top: 8%; text-align: center; color: red}
+.title a{text-decoration: none; color: inherit}
+
+.brms {display: flex; flex-direction: column; background-color: #e2e2e2}
+.brms .look_for_condition{display: flex; flex-direction: row; flex-wrap: wrap; background-color: #e2e2e2; height: 40px}
+.brms .result_title {display: inline-flex; flex-direction: row; background-color: #5a5b6e; height: 28px}
+.brms .result_title span {width: 60px; height: 60px; font-size: 20px; color: #dddddd}
+.brms .result_title a {font-size: 20px; color: #dddddd;}
+.brms .result_detail tbody td {background-color: #e2e2e2}
+.brms .result_detail thead {text-align: center; padding: .5em .5em;  font-weight: bold;  background: #66677c;  color: #fff;}
+.brms .result_detail {position: relative;}
+.brms .pagination {display: inline-flex; white-space: pre; align-content: center; align-items: center; left: 40%; position: relative}
+
+/* table css*/
+table {
+	width: 100%;
+	font-size: .938em;
+	border-collapse: collapse;/*边框会合并为一个单一的边框*/
+}
+caption {
+	margin: 1em 0 .7em 0;
+	text-align: center;
+	font-weight: bold;
+	font-size: 120%;
+	letter-spacing: .5px;
+	color: #fff;
+}
+
+thead {
+	text-align: center;
+	padding: .5em .5em;
+	font-weight: bold;
+	background: #66677c;
+	color: #fff;
+}
+
+td {
+	padding: .5em .5em;
+	/*border-bottom: solid 1px #ccc;*/
+	white-space: pre-line;
+	height: 10px;
+	text-align: center;
+}
+
+tr {height: 50px}
+
+tbody td{background-color: #edfff9;}
+
+td a{text-decoration: none; color: #4e4e4e}
+/*table,table tr th, table tr td { border:1px solid #0094ff; }*/

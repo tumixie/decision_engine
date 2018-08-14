@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static from staticfiles %}
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+<body class="login_body">
+<div class="form">
+    {##}
+    {#        {% if next %}#}
+    {#            {% if user.is_authenticated %}#}
+    {#                <p>Your account doesn't have access to this page. To proceed,#}
+    {#                    please login with an account that has access.</p>#}
+    {#            {% else %}#}
+    {#                <p>Please login to see this page.</p>#}
+    {#            {% endif %}#}
+    {#        {% endif %}#}
+    <h1>决策引擎管理界面</h1>
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        <div>
+            <td>用户名</td>
+            <td>{{ form.username }}</td>
+        </div>
+        <div>
+            <td>密码</td>
+            <td>{{ form.password }}</td>
+        </div>
+
+        <div>
+            <input type="submit" value="登录" class="login_submit"/>
+            <input type="hidden" name="next" value="{{ next }}"/>
+        </div>
+        {% if form.errors %}
+            <div class="account_mismatch">用户名密码不一致！</div>
+        {% endif %}
+    </form>
+
+    {# Assumes you setup the password_reset view in your URLconf #}
+    <p><a href="{% url 'password_reset' %}" class="forget_password">忘记密码?</a></p>
+</div>
+</body>
+</html>

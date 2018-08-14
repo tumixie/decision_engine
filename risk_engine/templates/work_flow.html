@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static from staticfiles %}
+{% block body %}
+    <div class="search_con">
+        <form action="{% url 'work_flow' %} " method="post">
+            {% csrf_token %}
+            <i class="iconfont icon-sousuo icon"></i>
+            <input type="text" name="apply_no" placeholder="请输入进件号" value="{{ apply_no }}" class="input_text">
+            <input type="submit" value="查询" class="input_btn">
+        </form>
+    </div>
+    <div class="search_con">
+        <form action="{% url 'work_flow' %} " method="post">
+            {% csrf_token %}
+            <i class="iconfont icon-sousuo icon"></i>
+            <input type="text" name="process_id" placeholder="请输入流程号" value="{{ process_id }}" class="input_text">
+            <input type="submit" value="查询" class="input_btn">
+        </form>
+    </div>
+{% endblock body %}

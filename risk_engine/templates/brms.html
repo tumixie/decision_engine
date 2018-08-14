@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load static from staticfiles %}
+{% block body %}
+    <div class="brms">
+        <div class="look_for_condition">
+            <form id="lookForCondition" class="look_for_condition" method="post" action="{% url 'brms_detail_rule' %}">
+                {% csrf_token %}
+                <div>
+                    <label>产品</label>
+                    <input type="text" value="{{ product }}" name="product">
+                </div>
+                <div>
+                    <label>策略</label>
+                    <input type="text" value="{{ policy }}" name="policy">
+                </div>
+                <div>
+                    <label>规则</label>
+                    <input type="text" value="{{ rule }}" name="rule">
+                </div>
+                <div>
+                    <label>有效时间</label>
+                    <input type="date" value="{{ valid_start_date }}" name="valid_start_date">
+                    <input type="date" value="{{ valid_end_date }}" name="valid_end_date">
+                </div>
+                <div>
+                    <label>版本号</label>
+                    <input type="text" value="{{ version }}" name="version">
+                </div>
+            </form>
+        </div>
+        <div>
+            <button href="#" onclick="openDialogView('规则内容', '{% url "brms_util" %}','800px', '500px')">策略更新</button>
+            <button onclick="search()">查询</button>
+        </div>
+        <div class="result_title">
+            <span><a href="{% url 'brms_detail_rule' %}">规则</a></span>
+            <span><a href="{% url 'brms_detail_rule_group' %}">规则集</a></span>
+        </div>
+        <div class="result_detail">
+            <table style="border-collapse: collapse">
+                {% if rule_list %}
+                    <thead>
+                    <tr>
+                        <td>rule_name</td>
+                        <td>rule_body</td>
+                        <td>rule_des</td>
+                        <td>rule_pkg</td>
+                        <td>create_time</td>
+                        <td>version</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for rule in rule_list %}
+                        <tr>
+                            <td>{{ rule.rule_name }}</td>
+                            <td><a href="#" onclick="openDialogView('规则内容', '{% url "brms_detail_rule_by_id" rule.id %}','800px', '500px')">查看</a></td>
+                            <td>{{ rule.rule_des }}</td>
+                            <td>{% for policy in rule.rule_policy.all %}{{ policy.policy_name }},{% endfor %}</td>
+                            <td>{{ rule.create_time|date:"Y-m-d H:i:s" }}</td>
+                            <td>{{ rule.version }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                {% endif %}
+                {% if rulegroup_list %}
+                    <thead>
+                    <tr>
+                        <td>rule_group_name</td>
+                        <td>rule_group_body</td>
+                        <td>rule_group_des</td>
+                        <td>rule_group_pkg</td>
+                        <td>create_time</td>
+                        <td>version</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for rule in rulegroup_list %}
+                        <tr>
+                            <td>{{ rule.rule_group_name }}</td>
+                            <td><a href="#" onclick="openDialogView('规则集内容', '{% url "brms_detail_rule_group_by_id" rule.id %}','800px', '500px')">查看</a></td>
+                            <td>{{ rule.rule_group_des }}</td>
+                            <td>{{ rule.rule_group_pkg }}</td>
+                            <td>{{ rule.create_time|date:"Y-m-d H:i:s" }}</td>
+                            <td>{{ rule.version }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                {% endif %}
+            </table>
+        </div>
+        {% if is_paginated %}
+            <div class="pagination">
+                {% if page_obj.has_previous %}
+                    <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}" style="color: blue">上一页 </a>
+                {% else %}
+                    <a disabled>上一页 </a>
+                {% endif %}
+                <p>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.</p>
+                {% if page_obj.has_next %}
+                    <a href="{{ request.path }}?page={{ page_obj.next_page_number }}" style="color: blue"> 下一页</a>
+                {% else %}
+                    <a disabled> 下一页</a>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock body %}
