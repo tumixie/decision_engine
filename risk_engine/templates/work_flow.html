@@ -2,7 +2,7 @@
 {% load static from staticfiles %}
 {% block body %}
     <div class="search_con">
-        <form action="{% url 'row_keys' %}" method="post" style="padding: 0px; margin: 0px; border: 0px">
+        <form action="{% url 'work_flow_detail_by_apply_no' %}" method="post" style="padding: 0px; margin: 0px; border: 0px">
             {% csrf_token %}
             <span><i class="iconfont icon-sousuo icon"></i></span>
             <input type="text" name="apply_no" placeholder="请输入进件号" value="{{ apply_no }}" class="input_text">
@@ -10,7 +10,7 @@
         </form>
     </div>
     <div class="search_con">
-        <form action="{% url 'row_keys' %}" method="post" style="padding: 0px; margin: 0px; border: 0px">
+        <form action="{% url 'work_flow_detail_by_process_id' %}" method="post" style="padding: 0px; margin: 0px; border: 0px">
             {% csrf_token %}
             <span><i class="iconfont icon-sousuo icon"></i></span>
             <input type="text" name="process_id" placeholder="请输入流程号" value="{{ process_id }}" class="input_text">
