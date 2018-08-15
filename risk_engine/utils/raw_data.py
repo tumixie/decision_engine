@@ -9,8 +9,8 @@ from django.http import HttpResponse, Http404
 
 
 def get_row_keys(apply_no):
-    # url = "http://idc-hadoopsh-05:20550/kafka_bd_trigger_dm/trigger_dm_{apply_no}*"
-    url = "http://172.16.1.185:20550/kafka_bd_trigger_dm/trigger_dm_{apply_no}*"
+    url = "http://idc-hadoopsh-05:20550/kafka_bd_trigger_dm/trigger_dm_{apply_no}*"
+    # url = "http://172.16.1.185:20550/kafka_bd_trigger_dm/trigger_dm_{apply_no}*"
     response = requests.get(url.format(apply_no=apply_no))
     if response.status_code != 200:
         raise Http404
@@ -44,8 +44,8 @@ def get_row_keys(apply_no):
 
 
 def get_raw_data(table, row_key):
-    # url = "http://idc-hadoopsh-05:20550/{table}/{row_key}"
-    url = "http://172.16.1.185:20550/{table}/{row_key}"  # sit
+    url = "http://idc-hadoopsh-05:20550/{table}/{row_key}"
+    # url = "http://172.16.1.185:20550/{table}/{row_key}"  # sit
     response = requests.get(url.format(table=table, row_key=row_key))
     objs = etree.HTML(response.content).xpath('//cell')
     if len(objs) == 0:
