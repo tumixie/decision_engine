@@ -142,7 +142,8 @@ def detail_policy_parser(kmodule_setting_file, version):
                     continue
                 policy = models.Policy()
                 policy.policy_name = kbase_name
-                policy.product = '渤海信托' if 'bh' in kbase_name else ('暖薪贷循环额度' if 'ccl' in kbase_name else '四只猫')
+                product_name = u'渤海信托' if 'bh' in kbase_name else (u'暖薪贷循环额度' if 'ccl' in kbase_name else u'四只猫')
+                policy.product = models.Product.objects.get(product_name=product_name)
                 policy.k_session_name = ksession_name
                 policy.k_session_type = ksession_type
                 policy.create_time = datetime.now()

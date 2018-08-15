@@ -32,3 +32,4 @@ function search(){//查询，页码清零
 	$("#lookForCondition").submit();
 		return false;
 }
+

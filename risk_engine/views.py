@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from datetime import datetime
+
 import requests
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect, Http404
@@ -78,13 +80,15 @@ def work_flow_detail_by_process_id(request, process_id):
 
 @login_required
 def brms(request):
-    return HttpResponse(render(request, 'brms.html'))
+    products = models.Product.objects.all()
+    context = {'products': products}
+    return HttpResponse(render(request, 'brms.html', context=context))
 
 
 class BrmsDetailRule(ListView):
     model = models.Rule
     template_name = 'brms.html'
-    paginate_by = 16
+    paginate_by = 12
 
     def post(self, request, *args, **kwargs):
         self.object_list = self.get_queryset()
@@ -111,19 +115,27 @@ class BrmsDetailRule(ListView):
             policy = self.request.POST.get('policy')
             product = self.request.POST.get('product')
             version = self.request.POST.get('version')
+            rule = self.request.POST.get('rule')
             valid_start_date = self.request.POST.get('valid_start_date')
             valid_end_date = self.request.POST.get('valid_end_date')
-            if policy is not None:
+            if policy is not None and len(policy) != 0:
                 queryset = queryset.filter(rule_policy__policy_name__contains=policy)
-            # if product is not None:
-            #     queryset.filter()
+            if product is not None and len(product) != 0:
+                queryset = queryset.filter(rule_policy__product__product_name=product)
             if version is not None:
                 queryset = queryset.filter(version__contains=version)
-            # if valid_start_date is not None:
-            #     queryset = queryset.filter(create_time__gte=valid_start_date)
-            # if valid_end_date is not None:
-            #     queryset = queryset.filter(create_time__lte=valid_end_date)
+            if rule is not None and len(rule) != 0:
+                queryset = queryset.filter(rule_name=rule)
+            if valid_start_date is not None and len(valid_start_date) != 0:
+                queryset = queryset.filter(create_time__gte=datetime.strptime(valid_start_date, '%Y-%m-%d %H:%M:%S'))
+            if valid_end_date is not None and len(valid_end_date) != 0:
+                queryset = queryset.filter(create_time__lte=datetime.strptime(valid_end_date, '%Y-%m-%d %H:%M:%S'))
         return queryset.distinct().all()
+
+    def get_context_data(self, **kwargs):
+        context = super(BrmsDetailRule, self).get_context_data(**kwargs)
+        context['products'] = models.Product.objects.all()
+        return context
 
     @csrf_exempt
     def dispatch(self, *args, **kwargs):
@@ -133,7 +145,12 @@ class BrmsDetailRule(ListView):
 class BrmsDetailRuleGroup(ListView):
     model = models.RuleGroup
     template_name = 'brms.html'
-    paginate_by = 16
+    paginate_by = 10
+
+    def get_context_data(self, **kwargs):
+        context = super(BrmsDetailRuleGroup, self).get_context_data(**kwargs)
+        context['products'] = models.Product.objects.all()
+        return context
 
     @csrf_exempt
     def dispatch(self, *args, **kwargs):
@@ -151,16 +168,22 @@ def brms_detail_rule_group_by_id(request, id):
 
 
 def brms_util(request):
-    # d = '/Users/tumixie/project/quark/root/weijiexie/project/web/decision_engine/resources/nruleengine/src/main/resources'
-    d = '/Users/tumixie/project/quark/ruleengine/src/main/resources/'
-    rule_files = brms_parser.list_rule_files(d)
-    rule_group_files = brms_parser.list_rule_group_files(d)
-    k_module_file = brms_parser.get_kmodule_setting_file(d)
-    for rule_group_file in rule_group_files:
-        brms_parser.detail_rule_group_parser(rule_group_file, version='1.1.1')
-    for ii, rule_file in enumerate(rule_files):
-        brms_parser.detail_rule_parser(rule_file, version='1.1.1')
-    brms_parser.detail_policy_parser(k_module_file, version='1.1.1')
-    return HttpResponse(render(request, 'brms_util.html'))
+    context = dict()
+    if request.method == 'GET':
+        return HttpResponse(render(request, 'brms_util.html'))
+    elif request.method == 'POST':
+        version = request.POST.get('version')
+        filepath = request.POST.get('addr')
+        if version is not None and filepath is not None:
+            rule_files = brms_parser.list_rule_files(filepath)
+            rule_group_files = brms_parser.list_rule_group_files(filepath)
+            k_module_file = brms_parser.get_kmodule_setting_file(filepath)
+            for rule_group_file in rule_group_files:
+                brms_parser.detail_rule_group_parser(rule_group_file, version=version)
+            for ii, rule_file in enumerate(rule_files):
+                brms_parser.detail_rule_parser(rule_file, version=version)
+            brms_parser.detail_policy_parser(k_module_file, version=version)
+            context['status'] = 'ok'
+        return HttpResponse(render(request, 'brms_util.html', context=context))
 
 

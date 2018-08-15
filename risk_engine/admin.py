@@ -18,5 +18,6 @@ class RuleAdmin(admin.ModelAdmin):
 admin.site.register(models.Rule, RuleAdmin)
 admin.site.register(models.Policy)
 admin.site.register(models.RuleGroup)
+admin.site.register(models.Product)
 
 

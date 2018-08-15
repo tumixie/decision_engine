@@ -44,7 +44,7 @@ class Policy(models.Model):
     k_session_type = models.CharField(max_length=10)
     k_session_name = models.CharField(max_length=50)
     create_time = models.DateTimeField()
-    product = models.CharField(max_length=20, null=True)
+    product = models.ForeignKey('Product')
     version = models.CharField(max_length=15)
 
     def __str__(self):
@@ -52,3 +52,16 @@ class Policy(models.Model):
 
     class Meta(object):
         ordering = ['policy_name']
+
+
+class Product(models.Model):
+
+    product_name = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.product_name
+
+    class Meta(object):
+        ordering = ['product_name']
+
+
